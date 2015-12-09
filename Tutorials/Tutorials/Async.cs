@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -10,11 +12,17 @@ namespace Tutorials
     {
         static void Main() 
         {
-        
+            var asyncDemo = new AsyncDemo();
+            asyncDemo.PerformAsyncStuff();
+
+            while (true)
+            {
+                Console.WriteLine("Deadly infinite loop! xD");
+            }
         }
     }
 
-    class AsyncDemo 
+    public class AsyncDemo 
     {
         public async Task PerformAsyncStuff() 
         {
@@ -24,9 +32,19 @@ namespace Tutorials
             });
         }
 
-        private async Task OpenTxtFile()
+        private static async Task OpenTxtFile()
         {
-            throw new NotImplementedException();
+            string line;
+            string filePath = Tutorials.Properties.Settings.Default.FilePath;
+
+            StreamReader file = new StreamReader(filePath);
+
+            while ((line = file.ReadLine()) != null)
+            {
+                Console.WriteLine(line);
+            }
+
+            file.Close();
         }
     }
 }
